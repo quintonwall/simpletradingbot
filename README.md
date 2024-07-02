@@ -27,7 +27,7 @@ import time
 
 
 #set up polygon client
-API_KEY = 'vCyWGolFwXcGmz7MHN7uPposMNqt4mqU'
+API_KEY = 'YOUR-API-KEY-HERE'
 client = RESTClient(API_KEY)
 
 
