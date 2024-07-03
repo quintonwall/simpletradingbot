@@ -30,23 +30,22 @@ def get_real_time_data(symbol):
    return client.get_last_trade(symbol)
 
 # Example usage
-# data = get_real_time_data('AAPL')
-# print(f"Last trade price for AAPL: ${data.price}")
+#data = get_real_time_data('AAPL')
+#print(f"Last trade price for AAPL: ${data.price}")
 
 
-# A simple implementation of a Relative Strength Index trading strategy
-def calculate_rsi(data, window=14):
-    df = pd.DataFrame([bar.__dict__ for bar in data])
-    df['close'] = df['close'].astype(float)
-    delta = df['close'].diff()
-    gain = (delta.where(delta > 0, 0)).rolling(window=window).mean()
-    loss = (-delta.where(delta < 0, 0)).rolling(window=window).mean()
-    rs = gain / loss
-    return 100 - (100 / (1 + rs)).iloc[-1]
 
+# Using Polygon.io's RSI Trading Strategy
+def calculate_rsi(window=14, limit=1, series_type="close"):
+    rsi_data = client.get_rsi('AAPL', window=window,limit=limit,series_type=series_type)
+    rsi = 0
+    for value in rsi_data.values:
+        rsi = value.value
+    return rsi
 
-rsi = calculate_rsi(historical_data)
-print(f"Current RSI: {rsi}")
+# Example usage
+#rsi = calculate_rsi()
+#print(f"Current RSI from Polygon: {rsi}")
 
 ##mock broker stub for placing trades
 def place_order(symbol, side, quantity):
@@ -63,7 +62,7 @@ def simple_trading_bot(symbol):
         start_date = end_date - timedelta(days=30)
         historical_data = get_historical_data(symbol, start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d'))
         
-        rsi = calculate_rsi(historical_data)
+        rsi = calculate_rsi()
         print(f"Current RSI for {symbol}: {rsi}")
 
         if rsi < 30:
@@ -84,7 +83,7 @@ def realtime_trading_bot(symbol):
         start_date = end_date - timedelta(days=30)
         rt_data = get_data_with_retry(symbol=symbol)
         
-        rsi = calculate_rsi(historical_data)
+        rsi = calculate_rsi()
         print(f"Realtime: Current RSI for {symbol}: {rsi}")
 
         if rsi < 30:
