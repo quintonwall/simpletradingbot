@@ -45,18 +45,6 @@ for bar in historical_data:
 
 ```
 
-## Retrieve real time data
-Polygon also supports retrieving real time data. For this, you will need a paid subscription. I’ve included the code for reference, but you don’t need anything more than the Basic (free) plan to implement the rest of the tradebot.  As you can see from the code below, and the previous example, working with the APIs is very simple, and responses are lightning fast. 
-
-```python
- # Example get real time data for last trade. Requires upgraded account.
-def get_real_time_data(symbol):
-    return client.get_last_trade(symbol)
-
-data = get_real_time_data('AAPL')
-print(f"Last trade price for AAPL: ${data.price}")
-```
-
 ## Implementing a simple trading strategy
 The next thing you are going to need is a trading strategy.  Polygon.io doesn’t provide trading strategy calculations. You have the flexibility to include whatever strategy makes the most sense for your use case. For this example, I’m going to use [Relative Strength Index \(RSI\)](https://www.stockmarketguides.com/article/rsi-indicator) and write a quick implementation using the historical data we fetched previously.
 
@@ -118,8 +106,20 @@ simple_trading_bot('AAPL')
 
 ```
 
+## Retrieve real time data
+Up until now, everything works using the free basic plan provided by Polygon. If you want to use real-time data, you will need a paid subscription. As you can see from the code below, and the previous example, working with the APIs is very simple, and responses are lightning fast. To retrieve real-time info, you can use the get_last_trade function in the client library and replace the call to get_historical_data in the tradingbot. 
+
+```python
+ # Example get real time data for last trade. Requires upgraded account.
+def get_real_time_data(symbol):
+    return client.get_last_trade(symbol)
+
+data = get_real_time_data('AAPL')
+print(f"Last trade price for AAPL: ${data.price}")
+```
+
 ## Adding error handling and rate limiting
-Our bot works fine, but a best practice when working with any API is to ensure that implement sufficient error handling and use API calls efficiently. For example, let’s say our bot was using real-time data and making real trades, we want to ensure it’s operating properly but adding retry logic and some sort of exponential backoff to avoid rate limits.
+Our bot works fine, but a best practice when working with any API is to ensure that implement sufficient error handling and use API calls efficiently. For example, let’s say our bot was using real-time data and making real trades, we want to ensure it’s operating properly but adding retry logic and some sort of exponential backoff to avoid rate limits. 
 
 ```python
 def get_data_with_retry(symbol, retries=3):
