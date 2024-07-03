@@ -170,4 +170,6 @@ This tutorial showed you how to write a basic algotrading bot using [Polygon.io'
 
 For more advanced features, including access to real-time data and higher data limits, some of which I touched upon in this post,  you will need to upgrade your plan. My best advice is start and experiment with historical data to prove out your logic, and when you are ready, upgrading is available at any time. 
 
+In a future post, I'll update the bot to use technical indicators from Polygon, and look at connecting it to a [Paper Trading Account](https://algo-trading.readthedocs.io/en/latest/paper-trading.html) via [InteractiveBrokers](https://www.interactivebrokers.com/en/home.php) API.  
+
 For more examples, check out the [Python client library on Github](https://github.com/polygon-io/client-python/tree/master), and leave a few stars if you find it helpful. 
