@@ -46,7 +46,7 @@ for bar in historical_data:
 ```
 
 ## Implementing a simple trading strategy
-The next thing you are going to need is a trading strategy.  Polygon.io doesn’t provide trading strategy calculations. You have the flexibility to include whatever strategy makes the most sense for your use case. For this example, I’m going to use [Relative Strength Index \(RSI\)](https://www.stockmarketguides.com/article/rsi-indicator) and write a quick implementation using the historical data we fetched previously.
+The next thing you are going to need is a trading strategy.  Polygon.io provides a number of [technical indicators](https://polygon.io/docs/stocks/get_v1_indicators_macd__stockticker) available via the free basic plan with delayed data which makes it really easy to test out what strategy is right for you. For this example, I’m going to use [Relative Strength Index \(RSI\)](https://www.stockmarketguides.com/article/rsi-indicator) and write a quick implementation myself as a learning exercise using the historical data we fetched previously. I''ll update the example soon to use one of the strategies Polygon provides as well. But the process is the same: create a func that contains, or calls your strategy. 
 
 ```python
 import numpy as np
