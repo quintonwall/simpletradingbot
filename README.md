@@ -13,7 +13,7 @@ pip install polygon-api-client pandas numpy requests
 ```
 ## Fetch historical data
 Historical data is available in the basic plan. Polygon.io makes it super easy to see what is available for free and what requires a paid subscription. Just look for the green dots next to the [API endpoints in the documentation](https://polygon.io/docs/stocks/getting-started) for anything that is included in the basic plan.
-![](python-algo-1.png)
+![](python-algo-1.png){width=400px}
 
 To get started, let’s write a quick function fetch Apple ticker information for the past 30 days.
 
