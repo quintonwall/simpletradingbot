@@ -46,24 +46,20 @@ for bar in historical_data:
 ```
 
 ## Implementing a simple trading strategy
-The next thing you are going to need is a trading strategy.  Polygon.io provides a number of [technical indicators](https://polygon.io/docs/stocks/get_v1_indicators_macd__stockticker) available via the free basic plan with delayed data which makes it really easy to test out what strategy is right for you. For this example, I’m going to use [Relative Strength Index \(RSI\)](https://www.stockmarketguides.com/article/rsi-indicator) and write a quick implementation myself as a learning exercise using the historical data we fetched previously. I''ll update the example soon to use one of the strategies Polygon provides as well. But the process is the same: create a func that contains, or calls your strategy. 
+The next thing you are going to need is a trading strategy.  Polygon.io provides a number of [technical indicators](https://polygon.io/docs/stocks/get_v1_indicators_macd__stockticker) available via the free basic plan with delayed data which makes it really easy to test out what strategy is right for you. For this example, I’m going to use [Relative Strength Index \(RSI\)](https://www.stockmarketguides.com/article/rsi-indicator) 
 
 ```python
-import numpy as np
-import pandas as pd
-
-def calculate_rsi(data, window=14):
-    df = pd.DataFrame([bar.__dict__ for bar in data])
-    df['close'] = df['close'].astype(float)
-    delta = df['close'].diff()
-    gain = (delta.where(delta > 0, 0)).rolling(window=window).mean()
-    loss = (-delta.where(delta < 0, 0)).rolling(window=window).mean()
-    rs = gain / loss
-    return 100 - (100 / (1 + rs)).iloc[-1]
+# Using Polygon.io's RSI Trading Strategy
+def calculate_rsi(window=14, limit=1, series_type="close"):
+    rsi_data = client.get_rsi('AAPL', window=window,limit=limit,series_type=series_type)
+    rsi = 0
+    for value in rsi_data.values:
+        rsi = value.value
+    return rsi
 
 # Example usage
-rsi = calculate_rsi(historical_data)
-print(f"Current RSI: {rsi}")
+#rsi = calculate_rsi()
+#print(f"Current RSI from Polygon: {rsi}")
 
 ```
 
@@ -91,7 +87,7 @@ def simple_trading_bot(symbol):
         start_date = end_date - timedelta(days=30)
         historical_data = get_historical_data(symbol, start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d'))
         
-        rsi = calculate_rsi(historical_data)
+        rsi = calculate_rsi()
         print(f"Current RSI for {symbol}: {rsi}")
 
         if rsi < 30:
@@ -150,7 +146,7 @@ def realtime_trading_bot(symbol):
         start_date = end_date - timedelta(days=30)
         rt_data = get_data_with_retry(symbol=symbol)
         
-        rsi = calculate_rsi(historical_data)
+        rsi = calculate_rsi()
         print(f"Realtime: Current RSI for {symbol}: {rsi}")
 
         if rsi < 30:
@@ -170,6 +166,6 @@ This tutorial showed you how to write a basic algotrading bot using [Polygon.io'
 
 For more advanced features, including access to real-time data and higher data limits, some of which I touched upon in this post,  you will need to upgrade your plan. My best advice is start and experiment with historical data to prove out your logic, and when you are ready, upgrading is available at any time. 
 
-In a future post, I'll update the bot to use technical indicators from Polygon, and look at connecting it to a [Paper Trading Account](https://algo-trading.readthedocs.io/en/latest/paper-trading.html) via [InteractiveBrokers](https://www.interactivebrokers.com/en/home.php) API.  
+In a future post, I'll look at connecting it to a [Paper Trading Account](https://algo-trading.readthedocs.io/en/latest/paper-trading.html) via [InteractiveBrokers](https://www.interactivebrokers.com/en/home.php) API.  
 
 For more examples, check out the [Python client library on Github](https://github.com/polygon-io/client-python/tree/master), and leave a few stars if you find it helpful. 
