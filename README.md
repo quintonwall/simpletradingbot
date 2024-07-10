@@ -1,12 +1,12 @@
 # How to write an Algorithmic Trading Bot in Python with Polygon.io
 
-Algorithmic trading, or *algotrading*, has become increasingly accessible to individual developers,  traders, economics students. In face, with a little bit of Python knowledge, anyone can write a simple algotrading bot using  historical market data provided by [Polygon.io](https://polygon.io) Let me show you how. 
+Algorithmic trading, or *algotrading*, has become increasingly accessible to individual developers,  traders, economics students. In face, with a little bit of Python knowledge, anyone can write a simple algotrading bot using historical market data provided by [Polygon.io](https://polygon.io) Let me show you how. 
 
-This blog will guide you some of the most common requirements you may encounter when building your own algotrading process, and how you could combine these into a simple trading bot. All you need to create the trading bot is a [free Basic plan](https://polygon.io/pricing?utm_campaign=quintontradingbot) to access  historical data via the basic plan.  
+This blog will guide you some of the most common requirements you may encounter when building your own algotrading process, and how you could combine these into a simple trading bot. All you need to create the trading bot is a [free Basic plan](https://polygon.io/pricing?utm_campaign=quintontradingbot) to access  historical data via the basic plan.  I will cover some real-time use cases for completeness. This requires a paid subscription, but it's not required to build the basic bot.
 
 ## Set Up Your Polygon.io Account
 - Sign up on the [Polygon.io](https://polygon.io/pricing?utm_campaign=quintontradingbot) website and select the basic plan. After registration, you'll receive an API key, or you can obtain this from within the dashboard at any time.
-- Ensure you have Python installed, and  install the necessary libraries
+- Ensure you have Python installed, and install the necessary libraries
 
 ```bash
 pip install polygon-api-client pandas numpy requests
